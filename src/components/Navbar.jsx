@@ -2,6 +2,15 @@ import { useState, useEffect } from "react";
 
 function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [theme, setTheme] = useState("light");
+
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [theme]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,6 +24,14 @@ function Navbar() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const toggleTheme = () => {
+    if (theme === "light") {
+      setTheme("dark");
+    } else {
+      setTheme("light");
+    }
+  };
 
   return (
     <nav
@@ -74,6 +91,12 @@ function Navbar() {
                 Contact
               </a>
             </li>
+            <button
+              onClick={toggleTheme}
+              className="px-3 py-2 rounded-full font-medium transition-colors bg-gray-200 text-secondary hover:bg-gray-300 dark:bg-secondary dark:text-primary dark:hover:bg-opacity-80"
+            >
+              {theme === "light" ? "🌙" : "☀️"}
+            </button>
           </ul>
         </div>
       </div>
