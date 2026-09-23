@@ -37,25 +37,25 @@ function Navbar() {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
         isScrolled
-          ? "pt-7 py-5 backdrop-blur-xs" // scroll
+          ? "pt-7 pt-5 pb-2 backdrop-blur-xs" // scroll
           : "py-5"
       }`}
     >
       <div
         className={`mx-auto transition-all duration-500 ease-in-out ${
-          isScrolled ? "max-w-xl" : "max-w-6xl"
+          isScrolled ? "max-w-2xl" : "max-w-6xl"
         } px-6`}
       >
         <div
           className={`flex items-center justify-between transition-all duration-300 ease-in-out ${
             isScrolled
-              ? "bg-[var(--light-secondary)] dark:bg-[var(--dark-secondary)] py-4 px-7 rounded-full"
-              : ""
+              ? "bg-[var(--light-secondary)] dark:bg-[var(--dark-secondary)] py-3 px-7 rounded-full"
+              : "text-2xl"
           }`}
         >
           <a
             href="#"
-            className={`font-bold transition-all duration-500 ${
+            className={`font-bold transition-all duration-300 ${
               isScrolled
                 ? "text-[var(--light-primary)] dark:text-[var(--dark-primary)]"
                 : "text-[var(--light-secondary)] dark:text-[var(--dark-secondary)]"
