@@ -6,38 +6,42 @@ function Profile() {
     age: "20 Tahun",
     university: "Universitas Katolik Indonesia Atma Jaya",
     motto:
-      "Terus belajar, berinovasi, dan memberikan dampak positif melalui teknologi.",
+      "Building a Strong Foundation in Artificial Intelligence and Deep Learning as an Information Systems Student at Atma Jaya Catholic University of Indonesia, with a Passion for Creating Intelligent Technology Solutions",
     avatar: myPhoto,
   };
 
   const techStack = [
     {
       tech: "HTML",
-      color: "#e34f26",
+      color: "#e64d25",
     },
     {
       tech: "CSS",
-      color: "#264de4",
-    },
-    {
-      tech: "JavaScript",
-      color: "#f7df1e",
+      color: "#0070ba",
     },
     {
       tech: "Tailwind CSS",
-      color: "#38bdf8",
+      color: "#18b7b9",
+    },
+    {
+      tech: "Python",
+      color: "#376f9e",
+    },
+    {
+      tech: "JavaScript",
+      color: "#f1c40f",
     },
     {
       tech: "React",
-      color: "#61dafb",
+      color: "#087ea4",
     },
     {
       tech: "Express.js",
-      color: "#000000",
+      color: "#f1c40f",
     },
     {
       tech: "MongoDB",
-      color: "#47a248",
+      color: "#00694a",
     },
   ];
 
@@ -74,7 +78,7 @@ function Profile() {
           </div>
 
           <div className="">
-            <p className="text-sm md:text-base italic leading-relaxed opacity-95">
+            <p className="text-sm md:text-base italic leading-relaxed opacity-95 max-w-xl">
               "{profileData.motto}"
             </p>
           </div>

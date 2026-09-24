@@ -55,7 +55,7 @@ function Navbar() {
             href="#"
             className={`font-bold transition-all duration-300 ${
               isScrolled
-                ? "text-[var(--light-primary)] dark:text-[var(--dark-secondary)]"
+                ? "text-[var(--light-primary)] dark:text-[var(--dark-secondary)] hover:scale-105"
                 : "text-[var(--light-secondary)] dark:text-[var(--dark-primary)] text-2xl"
             }`}
           >
@@ -70,22 +70,34 @@ function Navbar() {
             }`}
           >
             <li>
-              <a href="#profile" className="transition">
+              <a
+                href="#profile"
+                className="transition-all duration-400 ease-in-out dark:hover:text-[var(--dark-tertiary)] hover:text-[var(--light-secondary)]"
+              >
                 Profile
               </a>
             </li>
             <li>
-              <a href="#portfolio" className="transition">
+              <a
+                href="#portfolio"
+                className="transition-all duration-400 ease-in-out dark:hover:text-[var(--dark-tertiary)] hover:text-[var(--light-secondary)]"
+              >
                 Portfolio
               </a>
             </li>
             <li>
-              <a href="#sertifikat" className="transition">
+              <a
+                href="#sertifikat"
+                className="transition-all duration-400 ease-in-out dark:hover:text-[var(--dark-tertiary)] hover:text-[var(--light-secondary)]"
+              >
                 Sertifikat
               </a>
             </li>
             <li>
-              <a href="#contact" className="transition">
+              <a
+                href="#contact"
+                className="transition-all duration-400 ease-in-out dark:hover:text-[var(--dark-tertiary)] hover:text-[var(--light-secondary)]"
+              >
                 Contact
               </a>
             </li>
