@@ -35,10 +35,8 @@ function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
-        isScrolled
-          ? "pt-7 pt-5 pb-2 backdrop-blur-xs" // scroll
-          : "py-5"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
+        isScrolled ? "pt-7 pb-2 backdrop-blur-xs" : "py-7"
       }`}
     >
       <div
@@ -49,54 +47,48 @@ function Navbar() {
         <div
           className={`flex items-center justify-between transition-all duration-300 ease-in-out ${
             isScrolled
-              ? "bg-[var(--light-secondary)] dark:bg-[var(--dark-secondary)] py-3 px-7 rounded-full"
-              : "text-2xl"
+              ? "bg-[var(--light-secondary)] dark:bg-[var(--dark-primary)] py-4 px-7 rounded-full text-sm"
+              : "text-lg"
           }`}
         >
           <a
             href="#"
             className={`font-bold transition-all duration-300 ${
               isScrolled
-                ? "text-[var(--light-primary)] dark:text-[var(--dark-primary)]"
-                : "text-[var(--light-secondary)] dark:text-[var(--dark-secondary)]"
+                ? "text-[var(--light-primary)] dark:text-[var(--dark-secondary)]"
+                : "text-[var(--light-secondary)] dark:text-[var(--dark-primary)] text-2xl"
             }`}
           >
             Edward Hutauruk.
           </a>
 
           <ul
-            className={`flex items-center gap-4 font-bold ${
+            className={`flex flex-row justify-center items-center gap-4 font-bold ${
               isScrolled
-                ? "text-[var(--light-primary)] dark:text-[var(--dark-primary)]"
-                : "text-[var(--light-secondary)] dark:text-[var(--dark-secondary)]"
+                ? "text-[var(--light-primary)] dark:text-[var(--dark-secondary)]"
+                : "text-[var(--light-secondary)] dark:text-[var(--dark-primary)]"
             }`}
           >
             <li>
-              <a href="#home" className="text-sm transition">
-                Home
+              <a href="#profile" className="transition">
+                Profile
               </a>
             </li>
             <li>
-              <a href="#portfolio" className="text-sm transition">
+              <a href="#portfolio" className="transition">
                 Portfolio
               </a>
             </li>
             <li>
-              <a href="#sertifikat" className="text-sm transition">
+              <a href="#sertifikat" className="transition">
                 Sertifikat
               </a>
             </li>
             <li>
-              <a href="#contact" className="text-sm transition">
+              <a href="#contact" className="transition">
                 Contact
               </a>
             </li>
-            <button
-              onClick={toggleTheme}
-              className="px-3 py-2 rounded-full font-medium transition-colors bg-gray-200 text-secondary hover:bg-gray-300 dark:bg-secondary dark:text-primary dark:hover:bg-opacity-80"
-            >
-              {theme === "light" ? "🌙" : "☀️"}
-            </button>
           </ul>
         </div>
       </div>

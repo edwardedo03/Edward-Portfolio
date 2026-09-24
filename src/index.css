@@ -1,6 +1,11 @@
 :root {
   --light-primary: #ffbe0c;
   --light-secondary: #2a2312;
-  --dark-primary: #171717;
-  --dark-secondary: #21f1a8;
+  --dark-primary: #001524;
+  --dark-secondary: #ffecd1;
+  --dark-tertiary: #15616d;
+}
+
+body {
+  font-family: "Lexend";
 }

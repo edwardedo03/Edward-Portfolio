@@ -90,14 +90,17 @@ function PortfolioList() {
   };
 
   return (
-    <section className="py-12 px-4 overflow-hidden dark:bg-[var(--dark-primary)] bg-[var(--light-primary)]">
+    <section
+      id="portfolio"
+      className="py-12 px-4 overflow-hidden dark:bg-[var(--dark-primary)] bg-[var(--light-primary)]"
+    >
       <div className="text-center mb-10">
-        <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-[var(--light-secondary)] dark:text-[var(--dark-secondary)]">
+        <h2 className="text-3xl md:text-3xl font-bold tracking-tight text-[var(--light-secondary)] dark:text-[var(--dark-secondary)]">
           PORTFOLIO
         </h2>
       </div>
 
-      <div className="flex flex-col items-center justify-center gap-2 mb-10">
+      <div className="flex flex-col items-center justify-center gap-5 mb-10">
         <label
           htmlFor="portfolioCategory"
           className="text-sm font-medium text-gray-700 dark:text-gray-300"
