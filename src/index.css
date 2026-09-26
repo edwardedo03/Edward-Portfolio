@@ -1,9 +1,11 @@
 :root {
-  --light-primary: #ffbe0c;
-  --light-secondary: #2a2312;
-  --dark-primary: #001524;
-  --dark-secondary: #ffecd1;
+  --dark-primary: #ffecd1;
+  --dark-secondary: #001524;
   --dark-tertiary: #e07a5f;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {

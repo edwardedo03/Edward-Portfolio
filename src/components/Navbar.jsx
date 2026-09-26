@@ -25,18 +25,10 @@ function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const toggleTheme = () => {
-    if (theme === "light") {
-      setTheme("dark");
-    } else {
-      setTheme("light");
-    }
-  };
-
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
-        isScrolled ? "pt-7 pb-2 backdrop-blur-xs" : "py-7"
+        isScrolled ? "pt-7 pb-2" : "py-7"
       }`}
     >
       <div
@@ -47,7 +39,7 @@ function Navbar() {
         <div
           className={`flex items-center justify-between transition-all duration-300 ease-in-out ${
             isScrolled
-              ? "bg-[var(--light-secondary)] dark:bg-[var(--dark-primary)] py-4 px-7 rounded-full text-sm"
+              ? "bg-[var(--dark-secondary)] py-4 px-7 rounded-full text-sm backdrop-blur-md shadow-xl"
               : "text-lg"
           }`}
         >
@@ -55,24 +47,27 @@ function Navbar() {
             href="#"
             className={`font-bold transition-all duration-300 ${
               isScrolled
-                ? "text-[var(--light-primary)] dark:text-[var(--dark-secondary)] hover:scale-105"
-                : "text-[var(--light-secondary)] dark:text-[var(--dark-primary)] text-2xl"
+                ? "dark:text-[var(--dark-primary)] hover:scale-105"
+                : "dark:text-[var(--dark-secondary)] text-2xl"
             }`}
           >
-            Edward Hutauruk.
+            Edward Hutauruk
+            <span className="text-[var(--dark-tertiary)] font-extrabold">
+              .
+            </span>
           </a>
 
           <ul
             className={`flex flex-row justify-center items-center gap-4 font-bold ${
               isScrolled
-                ? "text-[var(--light-primary)] dark:text-[var(--dark-secondary)]"
-                : "text-[var(--light-secondary)] dark:text-[var(--dark-primary)]"
+                ? "dark:text-[var(--dark-primary)]"
+                : "dark:text-[var(--dark-secondary)]"
             }`}
           >
             <li>
               <a
                 href="#profile"
-                className="transition-all duration-400 ease-in-out dark:hover:text-[var(--dark-tertiary)] hover:text-[var(--light-secondary)]"
+                className="transition-all duration-400 ease-in-out hover:text-[var(--dark-tertiary)]"
               >
                 Profile
               </a>
@@ -80,23 +75,23 @@ function Navbar() {
             <li>
               <a
                 href="#portfolio"
-                className="transition-all duration-400 ease-in-out dark:hover:text-[var(--dark-tertiary)] hover:text-[var(--light-secondary)]"
+                className="transition-all duration-400 ease-in-out hover:text-[var(--dark-tertiary)] "
               >
                 Portfolio
               </a>
             </li>
             <li>
               <a
-                href="#sertifikat"
-                className="transition-all duration-400 ease-in-out dark:hover:text-[var(--dark-tertiary)] hover:text-[var(--light-secondary)]"
+                href="#certificate"
+                className="transition-all duration-400 ease-in-out hover:text-[var(--dark-tertiary)] "
               >
-                Sertifikat
+                Certificate
               </a>
             </li>
             <li>
               <a
                 href="#contact"
-                className="transition-all duration-400 ease-in-out dark:hover:text-[var(--dark-tertiary)] hover:text-[var(--light-secondary)]"
+                className="transition-all duration-400 ease-in-out hover:text-[var(--dark-tertiary)] "
               >
                 Contact
               </a>

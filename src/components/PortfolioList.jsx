@@ -1,206 +1,257 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import OnReveal from "./OnReveal";
 
 function PortfolioList() {
-  const [activeCategory, setActiveCategory] = useState("All");
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentCategory, setCurrentCategory] = useState("All");
+  const [portfolio, setPortfolio] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [techStack, setTechStack] = useState([]);
 
-  const portfolioCategory = [
+  useEffect(() => {
+    const fetchPortfolios = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/portfolios");
+        const data = await response.json();
+
+        setPortfolio(data);
+        setIsLoading(false);
+      } catch (err) {
+        console.error("Gagal mengambil data portfolio dari server", err);
+        setIsLoading(false);
+      }
+    };
+
+    fetchPortfolios();
+  }, []);
+
+  useEffect(() => {
+    const fetcTechStacks = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/techstacks");
+        const data = await response.json();
+
+        setTechStack(data);
+        setIsLoading(false);
+      } catch (err) {
+        console.error("Gagal mengambil data portfolio dari server", err);
+        setIsLoading(false);
+      }
+    };
+
+    fetcTechStacks();
+  }, []);
+
+  const categories = [
     "All",
     "Web Development",
     "UI/UX Design",
+    "Mobile",
     "Artificial Intelligence",
-    "Machine Learning",
-    "Deep Learning",
   ];
 
-  const dummyProjects = [
+  // Filtered Category
+  const filteredPortfolio =
+    currentCategory === "All"
+      ? portfolio
+      : portfolio.filter((item) => item.category === currentCategory);
+
+  // Base Index Variabel
+  const totalPortfolio = filteredPortfolio.length;
+
+  const safeIndex = totalPortfolio > 0 ? currentIndex % totalPortfolio : 0;
+  const prevIndex =
+    totalPortfolio > 0 ? (safeIndex - 1 + totalPortfolio) % totalPortfolio : 0;
+  const nextIndex = totalPortfolio > 0 ? (safeIndex + 1) % totalPortfolio : 0;
+
+  // Slider Automatic
+  useEffect(() => {
+    if (totalPortfolio <= 1) {
+      return;
+    }
+
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % totalPortfolio);
+    }, 6000);
+
+    return () => clearInterval(interval);
+  }, [currentIndex, totalPortfolio]);
+
+  if (isLoading) {
+    return (
+      <section className="h-[100vh] bg-[var(--dark-primary)]/80 flex justify-center items-center text-[var(--dark-secondary)]">
+        Loading Data....
+      </section>
+    );
+  }
+
+  // Handle category change
+  const handleCategoryChange = (category) => {
+    setCurrentCategory(category);
+    setCurrentIndex(0);
+  };
+
+  // Card Position
+  const cardPosition = [
     {
-      id: 1,
-      title: "Awesome Web App",
-      category: "Web Development",
-      description:
-        "A responsive full-stack web application built using modern tech stack.",
-      image:
-        "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&auto=format&fit=crop&q=60",
-      tags: ["React", "Tailwind", "Node.js"],
-      link: "#",
+      position: "center",
+      index: safeIndex,
     },
     {
-      id: 2,
-      title: "Mobile Banking UI",
-      category: "UI/UX Design",
-      description:
-        "Clean and modern user interface design for fintech mobile application.",
-      image:
-        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&auto=format&fit=crop&q=60",
-      tags: ["Figma", "UI/UX", "Mobile"],
-      link: "#",
+      position: "left",
+      index: prevIndex,
     },
     {
-      id: 3,
-      title: "E-Commerce Platform",
-      category: "Web Development",
-      description:
-        "High-performance e-commerce platform with seamless payment integration.",
-      image:
-        "https://images.unsplash.com/photo-1557821552-17105176677c?w=600&auto=format&fit=crop&q=60",
-      tags: ["Next.js", "Stripe", "Tailwind"],
-      link: "#",
-    },
-    {
-      id: 4,
-      title: "AI Content Generator",
-      category: "Artificial Intelligence",
-      description:
-        "AI-powered content generation tool using large language models.",
-      image:
-        "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&auto=format&fit=crop&q=60",
-      tags: ["Python", "TensorFlow", "FastAPI"],
-      link: "#",
+      position: "right",
+      index: nextIndex,
     },
   ];
 
-  const filteredProjects = dummyProjects.filter((project) => {
-    if (activeCategory === "All") return true;
-    return project.category === activeCategory;
-  });
+  // 3 Portfolio yang ditampilin
+  const visibleProjects =
+    totalPortfolio === 0
+      ? []
+      : cardPosition.slice(0, totalPortfolio).map((item) => ({
+          item: filteredPortfolio[item.index],
+          position: item.position,
+          index: item.index,
+        }));
 
-  const handlePrev = () => {
-    setCurrentIndex((prev) =>
-      prev === 0 ? filteredProjects.length - 1 : prev - 1,
-    );
-  };
-
-  const handleNext = () => {
-    setCurrentIndex((prev) =>
-      prev === filteredProjects.length - 1 ? 0 : prev + 1,
-    );
-  };
-
-  const getVisibleProjects = () => {
-    if (filteredProjects.length === 0) return [];
-    const total = filteredProjects.length;
-    const prev = (currentIndex - 1 + total) % total;
-    const next = (currentIndex + 1) % total;
-    return [
-      { project: filteredProjects[prev], position: "prev" },
-      { project: filteredProjects[currentIndex], position: "current" },
-      { project: filteredProjects[next], position: "next" },
-    ];
+  const handleClick = (position, index) => {
+    if (position !== "center") {
+      setCurrentIndex(index);
+    }
   };
 
   return (
     <section
       id="portfolio"
-      className="py-12 px-4 overflow-hidden dark:bg-[var(--dark-primary)] bg-[var(--light-primary)]"
+      className="h-[100vh] bg-[var(--dark-primary)] py-10"
     >
-      <div className="text-center mb-10">
-        <h2 className="text-3xl md:text-3xl font-bold tracking-tight text-[var(--light-secondary)] dark:text-[var(--dark-secondary)]">
-          PORTFOLIO
-        </h2>
-      </div>
-
-      <div className="flex flex-col items-center justify-center gap-5 mb-10">
-        <label
-          htmlFor="portfolioCategory"
-          className="text-sm font-medium text-gray-700 dark:text-gray-300"
-        >
-          Select Portfolio Category:
-        </label>
-        <select
-          name="portfolioCategory"
-          id="portfolioCategory"
-          value={activeCategory}
-          onChange={(e) => {
-            setActiveCategory(e.target.value);
-            setCurrentIndex(0);
-          }}
-          className="text-xs md:text-sm py-2 px-3 font-semibold rounded-lg border border-gray-300 dark:border-gray-700 bg-dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          {portfolioCategory.map((category) => (
-            <option key={category} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {filteredProjects.length === 0 ? (
-        <p className="text-center text-gray-500">Tidak ada proyek.</p>
-      ) : (
-        <div className="relative flex items-center justify-center gap-4">
-          <button
-            onClick={handlePrev}
-            className="z-10 p-3 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-md hover:bg-gray-50 transition"
-          >
-            &larr;
-          </button>
-
-          <div className="flex items-center justify-center gap-6 w-full max-w-5xl">
-            {getVisibleProjects().map(({ project, position }) => (
-              <div
-                key={`${project.id}-${position}`}
-                className={`flex-1 transition-all duration-500 ease-in-out ${
-                  position === "current"
-                    ? "scale-100 opacity-100 z-20"
-                    : "scale-90 opacity-40 hover:opacity-60 z-10 hidden md:block"
-                }`}
-              >
-                <div className="flex flex-col overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-xl">
-                  <div className="relative h-64 w-full overflow-hidden bg-gray-100 dark:bg-gray-800">
+      <div className="h-full flex flex-row items-center justify-around px-10">
+        {/* {Tech Stack} */}
+        <div className="w-1/3 h-full flex flex-col items-center justify-start p-14">
+          <h2 className="text-5xl font-bold mb-10 text-center">Tech Stack</h2>
+          <div className="w-full h-full px-5 text-xl font-bold flex flex-col items-start justify-start gap-2">
+            <div className="flex flex-col gap-4 py-2">
+              <h3>Front-End</h3>
+              <div className="flex flex-row gap-4">
+                {techStack.map((tech) => (
+                  <div className="w-14 h-14 object-contain">
                     <img
-                      src={project.image}
-                      alt={project.title}
-                      className="h-full w-full object-cover"
+                      src={`/assets/${tech.logo_filepath}`}
+                      alt={tech.name}
+                      className="w-full h-full rounded-2xl"
                     />
-                    <span className="absolute top-3 left-3 rounded-md bg-white/90 dark:bg-gray-900/90 px-2.5 py-1 text-xs font-semibold backdrop-blur-sm">
-                      {project.category}
-                    </span>
                   </div>
-
-                  <div className="flex flex-1 flex-col justify-between p-6">
-                    <div>
-                      <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
-                        {project.title}
-                      </h3>
-                      <p className="mt-2 text-sm text-gray-600 dark:text-gray-400 line-clamp-3">
-                        {project.description}
-                      </p>
-                    </div>
-
-                    <div className="mt-6">
-                      <div className="flex flex-wrap gap-1.5 mb-4">
-                        {project.tags.map((tag, tagIndex) => (
-                          <span
-                            key={tagIndex}
-                            className="rounded bg-gray-100 dark:bg-gray-800 px-2 py-0.5 text-xs text-gray-600 dark:text-gray-300"
-                          >
-                            #{tag}
-                          </span>
-                        ))}
-                      </div>
-
-                      <a
-                        href={project.link}
-                        className="inline-flex items-center justify-center w-full py-2.5 px-4 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-md transition"
-                      >
-                        Lihat Selebihnya &rarr;
-                      </a>
-                    </div>
-                  </div>
-                </div>
+                ))}
               </div>
-            ))}
+            </div>
           </div>
-
-          <button
-            onClick={handleNext}
-            className="z-10 p-3 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-md hover:bg-gray-50 transition"
-          >
-            &rarr;
-          </button>
         </div>
-      )}
+
+        {/* {Portfolio} */}
+        <div className="w-2/3 flex flex-col justify-evenly items-center p-10 h-full">
+          {/* {Portfolio Text Pengantar} */}
+          <OnReveal
+            className="w-full flex flex-col items-center"
+            direction="right"
+            duration={2000}
+          >
+            <div className="p-4 flex flex-col items-center w-full">
+              <h2 className="text-5xl font-bold mb-10">My Portfolio</h2>
+              <div className="flex flex-row items-center justify-center gap-4 w-full mb-5">
+                <p className="text-lg font-semibold">Select Category:</p>
+                <label className="">
+                  <select
+                    name=""
+                    id=""
+                    onChange={(e) => handleCategoryChange(e.target.value)}
+                    className="text-[var(--dark-primary)] bg-[var(--dark-secondary)] text-center text-xs rounded-xl py-1 cursor-pointer w-full"
+                  >
+                    {categories.map((category) => (
+                      <option key={category} value={category}>
+                        {category}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+            </div>
+          </OnReveal>
+
+          <OnReveal
+            className="w-full flex-1 flex"
+            direction="left"
+            duration={2000}
+          >
+            {/* {Portfolio List} */}
+            <div className="relative flex flex-row gap-4 w-full flex-1 items-center justify-center">
+              {visibleProjects.map((portfolio) => {
+                const { item, position, index } = portfolio;
+                const isCenter = position === "center";
+
+                return (
+                  <div
+                    key={item.id}
+                    onClick={() => handleClick(position, index)}
+                    className={`flex flex-col justify-start absolute transition-all duration-1000 ease-in-out w-[300px] h-[400px]
+                    ${
+                      isCenter
+                        ? "z-20 opacity-100 scale-100 translate-x-0 shadow-2xl"
+                        : position === "left"
+                          ? "z-10 opacity-40 scale-80 -translate-x-64 cursor-pointer hover:opacity-70"
+                          : "z-10 opacity-40 scale-80 translate-x-64 cursor-pointer hover:opacity-70"
+                    }
+                  `}
+                  >
+                    <div className="bg-[var(--dark-secondary)] text-[var(--dark-primary)] rounded-2xl flex flex-col justify-start pb-4 h-[450px]">
+                      {/* {Portfolio Image} */}
+                      <div className="w-full h-48 shrink-0 rounded-t-2xl overflow-hidden">
+                        <img
+                          src={item.image_url}
+                          alt=""
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      {/* {Bawah Img Portfolio */}
+                      <div className="flex flex-col justify-between items-center gap-4 py-3 px-7">
+                        {/* {Portfolio Desc */}
+                        <div className="flex flex-col justify-start items-center gap-2 text-center min-h-[60%]">
+                          <p className="text-lg font-bold">{item.title}</p>
+                          <p className="text-justify text-xs line-clamp-3">
+                            {item.description}
+                          </p>
+                        </div>
+                        <div className="flex flex-wrap gap-2 select-none w-full justify-center">
+                          {item.tags.map((tag) => (
+                            <p
+                              key={tag}
+                              className="text-xs bg-[var(--dark-primary)] text-[var(--dark-secondary)] rounded-full py-1 px-3 max-w-[80px] truncate"
+                            >
+                              {tag}
+                            </p>
+                          ))}
+                        </div>
+                        {/* {Portfolio Button */}
+                        <button
+                          className={`bg-[var(--dark-primary)] text-[var(--dark-secondary)] font-semibold text-sm rounded-xl px-4 py-1 hover:text-[var(--dark-primary)] hover:bg-[var(--dark-secondary)] transition-all duration-300 ease-in-out w-full ${
+                            isCenter
+                              ? "opacity-100 cursor-pointer"
+                              : "opacity-0 pointer-events-none"
+                          }`}
+                        >
+                          Details
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </OnReveal>
+        </div>
+      </div>
     </section>
   );
 }

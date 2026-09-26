@@ -5,11 +5,11 @@ function Footer() {
   const linkedinUrl = "https://linkedin.com/in/example";
 
   return (
-    <footer className="bg-[var(--light-secondary)] text-white dark:bg-[var(--dark-primary)] border-t border-black/10 dark:border-white/10">
+    <footer className="text-white dark:bg-[var(--dark-secondary)] border-t border-white/10">
       <div className="max-w-7xl mx-auto px-4 py-8 md:py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
-            <h3 className="text-xl font-bold text-[var(--light-primary)] dark:text-[var(--dark-secondary)]">
+            <h3 className="text-xl font-bold text-[var(--dark-primary)]">
               Portfolio
             </h3>
             <p className="text-sm opacity-80 max-w-xs">
@@ -23,16 +23,16 @@ function Footer() {
             <ul className="space-y-2">
               <li>
                 <a
-                  href="#home"
-                  className="text-sm opacity-80 hover:text-[var(--light-primary)] dark:hover:text-[var(--dark-secondary)] transition"
+                  href="#profile"
+                  className="text-sm opacity-80 hover:text-[var(--dark-primary)] transition"
                 >
-                  Home
+                  Profile
                 </a>
               </li>
               <li>
                 <a
                   href="#portfolio"
-                  className="text-sm opacity-80 hover:text-[var(--light-primary)] dark:hover:text-[var(--dark-secondary)] transition"
+                  className="text-sm opacity-80 hover:text-[var(--dark-primary)] transition"
                 >
                   Portfolio
                 </a>
@@ -40,7 +40,7 @@ function Footer() {
               <li>
                 <a
                   href="#sertifikat"
-                  className="text-sm opacity-80 hover:text-[var(--light-primary)] dark:hover:text-[var(--dark-secondary)] transition"
+                  className="text-sm opacity-80 hover:text-[var(--dark-primary)] transition"
                 >
                   Sertifikat
                 </a>
@@ -48,7 +48,7 @@ function Footer() {
               <li>
                 <a
                   href="#contact"
-                  className="text-sm opacity-80 hover:text-[var(--light-primary)] dark:hover:text-[var(--dark-secondary)] transition"
+                  className="text-sm opacity-80 hover:text-[var(--dark-primary)] transition"
                 >
                   Contact
                 </a>
